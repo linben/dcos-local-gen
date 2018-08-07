@@ -3,7 +3,8 @@
 Ansible playbook to build the local universe tarball, upload to s3, deploy on the DC/OS masters, and update agent certificates.
 
 **Prerequisites**
-- Build system: Centos 7.3 with Docker installed
+- Build target system: Centos 7.3 with Docker installed
+- Ansible 2.4.2
 
 **Setup**
 1. Copy ```hosts.example``` to ```hosts``` and update build, master, agent IPs

@@ -10,8 +10,7 @@ packages_list: cassandra:2.3.0-3.0.16,chronos:2.5.1,confluent-kafka:2.3.0-4.0.0e
 # AWS credentials (if uploading artifact to s3)
 aws_access_key: ""
 aws_secret_access_key: ""
-# optionally AWS access token 
+# optionally AWS access token
 aws_access_token: ""
-aws_region: 
-s3_bucket: 
-
+aws_region:
+s3_bucket:

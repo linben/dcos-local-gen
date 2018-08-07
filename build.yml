@@ -21,12 +21,14 @@
         - openssl
       become: yes
 
-    - name: Copy python3.5 to python3
-      shell: cp /usr/bin/python3.5 /usr/bin/python3
-      become: yes
-
-    - name: Copy python-pip3.5 to python-pip3
-      shell: cp /usr/bin/pip3.5 /usr/bin/pip3
+    - name: Symlink python and pip
+      file:
+        src: "{{ item }}3.5"
+        dest: /usr/bin/{{ item }}3
+        state: link
+      with_items:
+        - python
+        - pip
       become: yes
 
     - name: Install jsonschema
