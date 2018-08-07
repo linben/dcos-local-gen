@@ -1,0 +1,5 @@
+#TODO: implement pre-flight checks/prereqs playbook.
+- import_playbook: build.yml
+- import_playbook: s3upload.yml
+- import_playbook: deploy.yml
+- import_playbook: certs.yml

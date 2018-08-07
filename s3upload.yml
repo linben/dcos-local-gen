@@ -1,0 +1,36 @@
+- hosts: build 
+
+  tasks:
+    #copy tarball to S3
+
+    - name: Loading variables
+      include_vars: default_vars
+
+    - name: Install dependencies
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - python-boto
+        - python2-boto3
+        - python2-botocore
+      become: yes
+
+    - name: Install awscli
+      pip:
+        name: awscli
+        extra_args: --upgrade --user
+        executable: pip3
+
+    - name: upload to s3 and make readable
+      aws_s3: 
+        bucket: "{{ s3_bucket }}"
+        object: local-universe.tar.gz
+        src: /home/centos/universe/docker/local-universe/local-universe.tar.gz
+        mode: put
+        permission: public-read
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_access_key }}"
+        security_token: "{{ aws_access_token }}"
+
+      

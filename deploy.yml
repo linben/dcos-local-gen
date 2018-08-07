@@ -1,0 +1,47 @@
+- hosts: master
+
+  tasks:
+    - name: Loading variables
+      include_vars: default_vars
+
+    - name: Download Local Universe tarball 
+      get_url:
+        url: https://s3-{{ aws_region }}.amazonaws.com/{{ s3_bucket }}/local-universe.tar.gz
+        dest: /var/lib/local-universe-spark.tar.gz
+        validate_certs: no
+      become: yes
+     
+    - name: Create HTTP service
+      get_url:
+        url: https://raw.githubusercontent.com/mesosphere/universe/version-3.x/docker/local-universe/dcos-local-universe-http.service
+        dest: /etc/systemd/system/dcos-local-universe-http.service
+        validate_certs: no
+      become: yes
+
+    - name: Create registry service
+      get_url:
+        url: https://raw.githubusercontent.com/mesosphere/universe/version-3.x/docker/local-universe/dcos-local-universe-registry.service
+        dest: /etc/systemd/system/dcos-local-universe-registry.service
+        validate_certs: no
+      become: yes
+
+    - name: Load local universe to Docker
+      shell: docker load < local-universe-spark.tar.gz
+      args:
+        chdir: /var/lib/
+
+    - name: Enable and start HTTP service
+      systemd:
+        state: started
+        enabled: yes
+        daemon_reload: yes
+        name: dcos-local-universe-http.service
+      become: yes
+
+    - name: Enable and start registry service
+      systemd:
+        state: started
+        enabled: yes
+        daemon_reload: yes
+        name: dcos-local-universe-registry.service
+      become: yes

@@ -1,0 +1,29 @@
+---
+# Example for an ansible inventory file
+all:
+  children:
+    build:
+      hosts:
+        # Public IP of build host
+        52.34.98.182: 
+            ansible_user: centos
+            ansible_ssh_private_key_file: ~/.ssh/aws.pem
+    master:
+      hosts:
+        # Public IP of master
+        54.201.194.164:
+            ansible_user: core
+            ansible_ssh_private_key_file: ~/.ssh/aws.pem
+            ansible_python_interpreter: /opt/mesosphere/bin/python
+         
+    agent:
+      hosts:
+        # Internal IP of agents (requires extra_vars to be passed)
+        10.0.5.119:
+            ansible_user: core
+            ansible_python_interpreter: /opt/mesosphere/bin/python
+            ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q core@{{ master_host }}"'
+        10.0.3.195:
+            ansible_user: core
+            ansible_python_interpreter: /opt/mesosphere/bin/python
+            ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q core@{{ master_host }}"'

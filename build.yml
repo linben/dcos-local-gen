@@ -1,0 +1,65 @@
+- hosts: build
+  # built using centos 7.3 with docker installed
+  tasks:
+    - name: Loading variables
+      include_vars: default_vars
+
+    - name: Install IUM repository
+      yum:
+        name: https://centos7.iuscommunity.org/ius-release.rpm
+      become: yes
+
+    - name: Install dependencies
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - python35u
+        - python35u-pip
+        - git
+        - zip
+        - openssl
+      become: yes
+
+    - name: Copy python3.5 to python3
+      shell: cp /usr/bin/python3.5 /usr/bin/python3
+      become: yes
+
+    - name: Copy python-pip3.5 to python-pip3
+      shell: cp /usr/bin/pip3.5 /usr/bin/pip3
+      become: yes
+
+    - name: Install jsonschema
+      pip:
+        name: jsonschema
+        executable: pip3
+      become: yes
+
+    - name: Clone universe repo
+      git:
+        repo: 'https://github.com/mesosphere/universe.git'
+        dest: $HOME/universe
+        version: version-3.x
+
+# if this fails with error, rm -rf $HOME/universe
+    - name: make base
+      make:
+        chdir: /home/centos/universe/docker/local-universe
+        target: base
+      become: yes
+
+    - name: make Local Universe
+      make:
+        chdir: /home/centos/universe/docker/local-universe
+        target: local-universe
+        params:
+          DCOS_VERSION: "{{ dcos_version }}"
+          DCOS_PACKAGE_INCLUDE: "{{ packages_list }}"
+      become: yes
+
+    - name: Change ownership on tarball
+      file:
+        path : /home/centos/universe/docker/local-universe/local-universe.tar.gz
+        owner: "{{ ansible_user_id }}"
+        mode: 0644
+      become: yes
