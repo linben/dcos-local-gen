@@ -4,7 +4,7 @@
 dcos_version: 1.11
 
 # List of Universe packages to build (for more go to https://github.com/mesosphere/universe/tree/version-3.x/repo/packages)
-packages_list: cassandra:2.3.0-3.0.16,chronos:2.5.1,confluent-kafka:2.3.0-4.0.0e,confluent-zookeeper:2.2.0-4.0.0e,datastax-dse:2.2.0-5.1.2,datastax-ops:2.2.0-6.1.2,dcos-enterprise-cli:1.4.5,elastic:2.4.0-5.6.9,hdfs:2.2.0-2.6.0-cdh5.11.0,jenkins:3.5.1-2.107.2,kafka:2.3.0-1.1.0,kafka-zookeeper:2.2.0-3.4.11,kubernetes:1.2.0-1.10.5,marathon-lb:1.12.2,marathon:1.6.535,spark:2.3.1-2.2.1-2
+packages_list: cassandra:2.3.0-3.0.16,chronos:2.5.1,confluent-kafka:2.3.0-4.0.0e,confluent-zookeeper:2.2.0-4.0.0e,datastax-dse:2.2.0-5.1.2,datastax-ops:2.2.0-6.1.2,dcos-enterprise-cli:1.4.5,elastic:2.4.0-5.6.9,hdfs:2.2.0-2.6.0-cdh5.11.0,jenkins:3.5.1-2.107.2,kafka:2.3.0-1.1.0,kafka-zookeeper:2.2.0-3.4.11,kubernetes:1.2.1-1.10.6,marathon-lb:1.12.2,marathon:1.6.535,spark:2.3.1-2.2.1-2
 
 
 # AWS credentials (if uploading artifact to s3)
