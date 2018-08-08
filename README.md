@@ -2,7 +2,7 @@
 
 Ansible playbook to build the local universe tarball, upload to s3, deploy on the DC/OS masters, and update agent certificates.
 
-<b>NOTE:</b> In the future this will be replaced by DC/OS Package Registry.
+<b>NOTE:</b> In the future Local Universe will be replaced by DC/OS Package Registry.
 
 **Prerequisites**
 - Build target system: Centos 7.3 with Docker installed
